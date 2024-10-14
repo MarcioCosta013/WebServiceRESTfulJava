@@ -43,10 +43,7 @@ public class User {
     //private List<Task> tasks = new ArrayList<Task>;
 
 
-    public User() {
-    }
-
-
+    public User() {}
     public User(Long id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -78,5 +75,29 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password);
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
+    }
 
 }
