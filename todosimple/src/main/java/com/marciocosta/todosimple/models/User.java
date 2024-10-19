@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -66,6 +67,7 @@ public class User {
         this.id = id;
     }
 
+    @JsonIgnore //para não retornar para o front todas as task dele.
     public List<Task> getTasks() {
         return this.tasks;
     }
