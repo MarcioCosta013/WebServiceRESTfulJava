@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.marciocosta.todosimple.models.User;
 import com.marciocosta.todosimple.repositories.UserRepository;
+import com.marciocosta.todosimple.services.exceptions.DataBindingViolationException;
+import com.marciocosta.todosimple.services.exceptions.ObjectNotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -20,7 +22,7 @@ public class UserService {
     public User findById(Long id){
 
         Optional<User> user = this.userRepository.findById(id); //o Optional serve para se não tiver o usuario no bd ele retornar "vazio" em vez de null(evitando o NullExceptionPoint).
-        return user.orElseThrow(() -> new RuntimeException( //para retornar só de vir algo, se vir empty(vazio) dispare essa excesão runtime que faz com que o programa não pare.
+        return user.orElseThrow(() -> new ObjectNotFoundException( //para retornar só de vir algo, se vir empty(vazio) dispare essa excesão runtime que faz com que o programa não pare.
             "Usuario não encontrado! Id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
@@ -44,7 +46,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possivel excluir pois há entidades relacionadas!");
+            throw new DataBindingViolationException("Não é possivel excluir pois há entidades relacionadas!");
         }
     }
 }
