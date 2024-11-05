@@ -1,11 +1,16 @@
 package com.marciocosta.todosimple.services;
 
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marciocosta.todosimple.models.User;
+import com.marciocosta.todosimple.models.enums.ProfileEnum;
 import com.marciocosta.todosimple.repositories.UserRepository;
 import com.marciocosta.todosimple.services.exceptions.DataBindingViolationException;
 import com.marciocosta.todosimple.services.exceptions.ObjectNotFoundException;
@@ -17,6 +22,9 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public User findById(Long id){
@@ -30,6 +38,8 @@ public class UserService {
     @Transactional //essa notação serve para "ou sava tudo ou nada", serve mais para creates e updates em um bd.
     public User create (User obj){
         obj.setId(null); // para impedir que o usuario use a o Create para atualizar um dado em um id já existente.
+        obj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword())); //Para criptografar a senha antes de salvar no BD.
+        obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet())); // ???
         obj = this.userRepository.save(obj); //serve para já salvar também se for criado com Task's. E é possivel fazer isso pelo usuário pelo na classe User tem a Task também.
         return obj;
     }
@@ -38,6 +48,7 @@ public class UserService {
     public User update (User obj){
         User newObj = findById(obj.getId()); //serve para verifica se realmente existe esse usuario. e já reutiliza o codigo acima do findById.
         newObj.setPassword(obj.getPassword());
+        newObj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword()));
         return this.userRepository.save(newObj);
     }
 

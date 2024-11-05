@@ -15,8 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.marciocosta.todosimple.security.JWTAuthenticationFilter;
 import com.marciocosta.todosimple.security.JWTUtil;
 
 import java.util.Arrays;
@@ -61,19 +62,34 @@ public class SecurityConfig {
             .anyRequest().authenticated().and()
             .authenticationManager(authenticationManager);
 
+        http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, this.jwtUtil));
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+        
+        // Define métodos permitidos
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        
+        // Define origens permitidas (caso precise permitir apenas algumas, defina aqui)
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Exemplo de origem permitida
+        
+        // Define cabeçalhos permitidos
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
+        
+        // Configuração de exposição de cabeçalhos (caso precise expor cabeçalhos específicos)
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
         return (CorsConfigurationSource) source;
-}
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
