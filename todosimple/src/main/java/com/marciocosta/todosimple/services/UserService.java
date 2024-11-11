@@ -1,17 +1,21 @@
 package com.marciocosta.todosimple.services;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marciocosta.todosimple.models.User;
 import com.marciocosta.todosimple.models.enums.ProfileEnum;
 import com.marciocosta.todosimple.repositories.UserRepository;
+import com.marciocosta.todosimple.security.UserSpringSecurity;
+import com.marciocosta.todosimple.services.exceptions.AuthorizationException;
 import com.marciocosta.todosimple.services.exceptions.DataBindingViolationException;
 import com.marciocosta.todosimple.services.exceptions.ObjectNotFoundException;
 
@@ -28,6 +32,10 @@ public class UserService {
 
 
     public User findById(Long id){
+        UserSpringSecurity userSpringSecurity = authenticated();
+        if(!Objects.nonNull(userSpringSecurity) || !userSpringSecurity.hasRole(ProfileEnum.ADMIM) && !id.equals(userSpringSecurity.getId())){
+            throw new AuthorizationException("Acesso negado!");
+        }
 
         Optional<User> user = this.userRepository.findById(id); //o Optional serve para se não tiver o usuario no bd ele retornar "vazio" em vez de null(evitando o NullExceptionPoint).
         return user.orElseThrow(() -> new ObjectNotFoundException( //para retornar só de vir algo, se vir empty(vazio) dispare essa excesão runtime que faz com que o programa não pare.
@@ -58,6 +66,17 @@ public class UserService {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possivel excluir pois há entidades relacionadas!");
+        }
+    }
+
+    public static UserSpringSecurity authenticated (){
+    /*
+     * Criada para controlar quem pode ter acesso as informações, ou adm ou usuário comum.
+     */
+        try {
+            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            return null;
         }
     }
 }
