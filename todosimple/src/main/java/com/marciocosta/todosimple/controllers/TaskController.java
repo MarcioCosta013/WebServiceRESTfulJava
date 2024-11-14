@@ -12,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marciocosta.todosimple.models.Task;
 import com.marciocosta.todosimple.services.TaksService;
-import com.marciocosta.todosimple.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -35,8 +34,6 @@ public class TaskController {
     @Autowired
     private TaksService taksService;
 
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) {
@@ -44,10 +41,10 @@ public class TaskController {
         return ResponseEntity.ok(obj);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId) {
-        userService.findById(userId); //para retornar um erro caso não encontre o user.
-        List<Task> objs = this.taksService.findAllByUserId(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<Task>> findAllByUser() {
+
+        List<Task> objs = this.taksService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
     
