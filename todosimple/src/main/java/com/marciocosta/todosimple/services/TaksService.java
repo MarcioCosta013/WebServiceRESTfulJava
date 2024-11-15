@@ -30,8 +30,7 @@ public class TaksService {
             "Tarefa não encontrada: ID: " + id + ", Tipo:" + Task.class.getName()));
 
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        if (Objects.nonNull(userSpringSecurity) ||
-            !userSpringSecurity.hasRole(ProfileEnum.ADMIM) && !userHasTask(userSpringSecurity, task)) {
+        if (Objects.isNull(userSpringSecurity) || !userSpringSecurity.hasRole(ProfileEnum.ADMIM) && !userHasTask(userSpringSecurity, task)) {
                 throw new AuthorizationException("Acesso Negado");
         }
         return task;
@@ -39,7 +38,7 @@ public class TaksService {
 
     public List<Task> findAllByUser (){
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        if (Objects.nonNull(userSpringSecurity)) {
+        if (Objects.isNull(userSpringSecurity)) {
                 throw new AuthorizationException("Acesso Negado");
         }
         
@@ -51,7 +50,7 @@ public class TaksService {
     public Task create(Task obj){
 
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        if (Objects.nonNull(userSpringSecurity)) {
+        if (Objects.isNull(userSpringSecurity)) {
                 throw new AuthorizationException("Acesso Negado");
         }
         

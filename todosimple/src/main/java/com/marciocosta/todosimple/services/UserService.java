@@ -2,7 +2,6 @@ package com.marciocosta.todosimple.services;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
