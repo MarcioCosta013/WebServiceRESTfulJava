@@ -4,7 +4,7 @@ public interface TaskProjection {
     
     public Long getId();
 
-    public String getDescripition();
+    public String getDescription();
 
     
 }

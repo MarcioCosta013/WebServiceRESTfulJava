@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marciocosta.todosimple.models.User;
-import com.marciocosta.todosimple.models.User.CreateUser;
-import com.marciocosta.todosimple.models.User.UpdateUser;
 import com.marciocosta.todosimple.models.dto.UserCreateDTO;
+import com.marciocosta.todosimple.models.dto.UserUpdateDTO;
 import com.marciocosta.todosimple.services.UserService;
 
 import jakarta.validation.Valid;
@@ -45,8 +44,9 @@ public class UserController {
     //@Validated(CreateUser.class) //serve para validar de tudo está seguindo as regras estabelecidas no model. (refatorado)
     public ResponseEntity<Void> create(@Valid @RequestBody UserCreateDTO obj) { //o "Valid" indica qual dado vai ser validado e o "Requestbody" passa dados no corpo da mensagem e só deve ser usado para o create e o update.
         
-        this.userService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        User user = this.userService.fromDTO(obj);
+        User newUser = this.userService.create(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
         /*
          * Um builder(ServletUriComponentsBuilder) que vai pegar o contexto da requisição atual que estamos rodando(fromCurrentRequest)
          * ("do User e do localhost que estamos no momento"), adiciona um path na frente dele(path("/{id}")),
@@ -56,11 +56,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @Validated(UpdateUser.class)
-    public ResponseEntity<Void> update(@Valid @RequestBody User obj, @PathVariable Long id) {
+    
+    public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO obj, @PathVariable Long id) {
         
         obj.setId(id); //para garantir que é o mesmo id que estamos recebendo pelo objeto.
-        this.userService.update(obj);
+        User user = this.userService.fromDTO(obj);
+        this.userService.update(user);
         return ResponseEntity.noContent().build();
     }
 

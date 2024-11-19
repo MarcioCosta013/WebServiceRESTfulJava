@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.marciocosta.todosimple.models.User;
 import com.marciocosta.todosimple.models.dto.UserCreateDTO;
+import com.marciocosta.todosimple.models.dto.UserUpdateDTO;
 import com.marciocosta.todosimple.models.enums.ProfileEnum;
 import com.marciocosta.todosimple.repositories.UserRepository;
 import com.marciocosta.todosimple.security.UserSpringSecurity;
@@ -88,6 +89,13 @@ public class UserService {
         user.setUsername(obj.getUsername());
         user.setPassword(obj.getPassword());
 
+        return user;
+    }
+
+    public User fromDTO(@Valid UserUpdateDTO obj){
+        User user = new User();
+        user.setId(obj.getId());
+        user.setPassword(obj.getPassword());
         return user;
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marciocosta.todosimple.models.Task;
 import com.marciocosta.todosimple.models.projection.TaskProjection;
-import com.marciocosta.todosimple.services.TaksService;
+import com.marciocosta.todosimple.services.TaskService;
 
 import jakarta.validation.Valid;
 
@@ -33,19 +33,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class TaskController {
 
     @Autowired
-    private TaksService taksService;
+    private TaskService taskService;
 
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) {
-        Task obj = this.taksService.findById(id);
+        Task obj = this.taskService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @GetMapping("/user")
     public ResponseEntity<List<TaskProjection>> findAllByUser() {
 
-        List<TaskProjection> objs = this.taksService.findAllByUser();
+        List<TaskProjection> objs = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
     
@@ -54,7 +54,7 @@ public class TaskController {
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj) {
         
-        this.taksService.create(obj);
+        this.taskService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
@@ -64,13 +64,13 @@ public class TaskController {
     public ResponseEntity<Void> upadate( @Valid @RequestBody Task obj, @PathVariable Long id){
 
         obj.setId(id);
-        this.taksService.update(obj);
+        this.taskService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete (@PathVariable Long id){
-        this.taksService.delete(id);
+        this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

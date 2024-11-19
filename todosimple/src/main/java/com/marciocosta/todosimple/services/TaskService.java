@@ -18,7 +18,7 @@ import com.marciocosta.todosimple.services.exceptions.DataBindingViolationExcept
 import com.marciocosta.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class TaksService {
+public class TaskService {
     
     @Autowired
     private TaskRepository taskRepository;
