@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marciocosta.todosimple.models.Task;
+import com.marciocosta.todosimple.models.projection.TaskProjection;
 import com.marciocosta.todosimple.services.TaksService;
 
 import jakarta.validation.Valid;
@@ -42,9 +43,9 @@ public class TaskController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<Task>> findAllByUser() {
+    public ResponseEntity<List<TaskProjection>> findAllByUser() {
 
-        List<Task> objs = this.taksService.findAllByUser();
+        List<TaskProjection> objs = this.taksService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
     

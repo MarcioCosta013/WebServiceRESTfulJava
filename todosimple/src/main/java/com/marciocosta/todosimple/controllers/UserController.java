@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.marciocosta.todosimple.models.User;
 import com.marciocosta.todosimple.models.User.CreateUser;
 import com.marciocosta.todosimple.models.User.UpdateUser;
+import com.marciocosta.todosimple.models.dto.UserCreateDTO;
 import com.marciocosta.todosimple.services.UserService;
 
 import jakarta.validation.Valid;
@@ -41,8 +42,8 @@ public class UserController {
     }
     
     @PostMapping
-    @Validated(CreateUser.class) //serve para validar de tudo está seguindo as regras estabelecidas no model.
-    public ResponseEntity<Void> create(@Valid @RequestBody User obj) { //o "Valid" indica qual dado vai ser validado e o "Requestbody" passa dados no corpo da mensagem e só deve ser usado para o create e o update.
+    //@Validated(CreateUser.class) //serve para validar de tudo está seguindo as regras estabelecidas no model. (refatorado)
+    public ResponseEntity<Void> create(@Valid @RequestBody UserCreateDTO obj) { //o "Valid" indica qual dado vai ser validado e o "Requestbody" passa dados no corpo da mensagem e só deve ser usado para o create e o update.
         
         this.userService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

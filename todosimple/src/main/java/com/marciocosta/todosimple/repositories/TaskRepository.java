@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // import org.springframework.data.repository.query.Param;
 
 import com.marciocosta.todosimple.models.Task;
+import com.marciocosta.todosimple.models.projection.TaskProjection;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     
     //1° forma de escrever(tudo automatizado pelo Spring)
-    List<Task> findByUser_Id(Long id);
+    List<TaskProjection> findByUser_Id(Long id);
 
     //2° forma de escrever(Jeito Semi-automatico de fazer usando comando JPQL)
     // @Query(value = "SELECT t FROM Task t WHERE t.user.id = :id")

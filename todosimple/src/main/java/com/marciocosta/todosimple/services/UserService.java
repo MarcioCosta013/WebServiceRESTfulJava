@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marciocosta.todosimple.models.User;
+import com.marciocosta.todosimple.models.dto.UserCreateDTO;
 import com.marciocosta.todosimple.models.enums.ProfileEnum;
 import com.marciocosta.todosimple.repositories.UserRepository;
 import com.marciocosta.todosimple.security.UserSpringSecurity;
@@ -19,6 +20,7 @@ import com.marciocosta.todosimple.services.exceptions.DataBindingViolationExcept
 import com.marciocosta.todosimple.services.exceptions.ObjectNotFoundException;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Service //Onde fica as regra de negocio.
 public class UserService {
@@ -77,5 +79,15 @@ public class UserService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public User fromDTO(@Valid UserCreateDTO obj){
+
+        User user = new User();
+
+        user.setUsername(obj.getUsername());
+        user.setPassword(obj.getPassword());
+
+        return user;
     }
 }

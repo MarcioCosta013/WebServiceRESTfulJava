@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.marciocosta.todosimple.models.Task;
 import com.marciocosta.todosimple.models.User;
 import com.marciocosta.todosimple.models.enums.ProfileEnum;
+import com.marciocosta.todosimple.models.projection.TaskProjection;
 import com.marciocosta.todosimple.repositories.TaskRepository;
 import com.marciocosta.todosimple.security.UserSpringSecurity;
 import com.marciocosta.todosimple.services.exceptions.AuthorizationException;
@@ -36,13 +37,13 @@ public class TaksService {
         return task;
     }
 
-    public List<Task> findAllByUser (){
+    public List<TaskProjection> findAllByUser (){
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         if (Objects.isNull(userSpringSecurity)) {
                 throw new AuthorizationException("Acesso Negado");
         }
         
-        List<Task> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
+        List<TaskProjection> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
         return tasks;
     }
 
