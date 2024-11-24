@@ -4,6 +4,7 @@ function hideLoader() {
   document.getElementById("loading").style.display = "none";
 }
 
+//Para preenxer as tarefas
 function show(tasks) {
   let tab = `<thead>
             <th scope="col">#</th>
@@ -21,9 +22,11 @@ function show(tasks) {
 
   document.getElementById("tasks").innerHTML = tab;
 }
+//fim
 
+//
 async function getTasks() {
-  let key = "Authorization";
+  let key = "Authorization"; //pega authorization e salva no localStorage.
   const response = await fetch(tasksEndpoint, {
     method: "GET",
     headers: new Headers({
