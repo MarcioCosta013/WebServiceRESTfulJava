@@ -7,9 +7,9 @@ function hideLoader() {
 //Para preenxer as tarefas
 function show(tasks) {
   let tab = `<thead>
-            <th scope="col">#</th>
-            <th scope="col">Description</th>
-        </thead>`;
+              <th scope="col">#</th>
+              <th scope="col">Description</th>
+            </thead>`;
 
   for (let task of tasks) {
     tab += `
