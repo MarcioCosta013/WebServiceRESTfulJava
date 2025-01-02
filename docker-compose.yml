@@ -74,7 +74,7 @@ services:
     networks:
       - internal-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/todosimple
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/todosimple?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
     volumes:
@@ -84,7 +84,7 @@ services:
 
 volumes:
   mysqlvolume:
-  
+
 networks:
   internal-network:
     driver: bridge
