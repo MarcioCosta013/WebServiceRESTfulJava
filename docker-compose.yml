@@ -49,6 +49,10 @@ services:
       - MYSQL_DATABASE=${MYSQLDB_DATABASE}
     ports:
       - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
+    expose:
+      - "3306"
+    networks:
+      - internal-network
     volumes:
       - mysqlvolume:/var/lib/mysql
 
@@ -65,6 +69,10 @@ services:
     env_file: ./.env
     ports:
       - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
+    expose:
+      - "8080"
+    networks:
+      - internal-network
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/todosimple
       - SPRING_DATASOURCE_USERNAME=root
@@ -76,3 +84,7 @@ services:
 
 volumes:
   mysqlvolume:
+  
+networks:
+  internal-network:
+    driver: bridge
