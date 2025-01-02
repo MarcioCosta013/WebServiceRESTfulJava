@@ -66,8 +66,8 @@ services:
     ports:
       - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:${MYSQLDB_DOCKER_PORT}/${MYSQLDB_DATABASE}
-      - SPRING_DATASOURCE_USERNAME=${MYSQLDB_USER}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/todosimple
+      - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
     volumes:
       - .m2:/root/.m2
