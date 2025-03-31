@@ -1,7 +1,39 @@
-# Web Service RESTful com Java
-## Repositório de aprendizado prático de criação de um Web Service RESTful em Java.
+[JAVA_BADGE]:https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
 
-<p>
+[SPRING_BADGE]: https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
+
+[DOCKER_BADGE]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
+
+[JAVACRIPT_BADGE]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+
+[HTML_BADGE]: https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white
+
+[CSS_BADGE]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
+
+[BOOTSTRAP_BADGE]: https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white
+
+[MYSQL_BADGE]: https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white
+
+[MAVEN_BADGE]: https://img.shields.io/badge/apachemaven-C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white
+
+[AZURE_BADGE]: https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white
+
+<h1 align="center"> Web Service RESTful com Java </h1>
+
+![java][JAVA_BADGE]
+![spring][SPRING_BADGE]
+![html][HTML_BADGE]
+![css][CSS_BADGE]
+![javascript][JAVACRIPT_BADGE]
+![bootstrap][BOOTSTRAP_BADGE]
+![mysql][MYSQL_BADGE]
+![maven][MAVEN_BADGE]
+![docker][DOCKER_BADGE]
+![AZURE][AZURE_BADGE]
+
+<h2 align="center"> Repositório de aprendizado prático de criação de um Web Service RESTful em Java. </h2>
+
+<p align="center">
   Na minha busca por mais aprendizado pratico em Web Services com Java e Spring encontrei a playlist do professor Lucas Ângelo,
   monitor da PucMinas no curso de Engenharia de Software. Para melhor aprendizado busquei digitar todo o código desse repositório
   embora houvesse a opção de clonar o repósitório original. 
